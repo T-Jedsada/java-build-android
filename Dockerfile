@@ -8,6 +8,22 @@ ENV LANG="en_US.UTF-8" \
   TOOL_VER_RUBY="2.5.1"\
   JAVA_HOME="/usr/lib/jvm/java-8-oracle"
 
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
+  curl \
+  wget \
+  rsync \
+  sudo \
+  expect \
+  # Common, useful
+  build-essential \
+  zip \
+  unzip \
+  tree \
+  clang \
+  awscli \
+  # For PPAs
+  software-properties-common
+
 # Install Java 8
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
   apt-get install -y --no-install-recommends locales && \
