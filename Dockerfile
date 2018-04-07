@@ -18,4 +18,15 @@ RUN apt-get update && \
   apt-get update && \
   apt-get install -y --no-install-recommends oracle-java8-installer oracle-java8-set-default && \
   apt-get clean all
-  
+
+# Gradle PPA
+RUN apt-get update && apt-get -y install gradle && gradle -v
+
+# Maven 2
+RUN apt-get purge maven maven2 && apt-get update && apt-get -y install maven && mvn --version
+
+# Fatlane
+RUN gem install fastlane --no-document && fastlane --version
+
+# Cleaning
+RUN apt-get clean
