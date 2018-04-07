@@ -18,11 +18,22 @@ RUN apt-get update && \
   apt-get install -y --no-install-recommends oracle-java8-installer oracle-java8-set-default && \
   apt-get clean all
 
-# Install Ruby Gem
-RUN apt-get install -y ruby-dev
-
-# Install Make
-RUN apt-get install -y make
+# Install Ruby from source
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
+    build-essential \
+    zlib1g-dev \
+    libssl-dev \
+    libreadline6-dev \
+    libyaml-dev \
+    libsqlite3-dev \
+ && mkdir -p /tmp/ruby-inst && cd /tmp/ruby-inst \
+ && wget -q http://cache.ruby-lang.org/pub/ruby/ruby-${TOOL_VER_RUBY}.tar.gz \
+ && tar -xvzf ruby-${TOOL_VER_RUBY}.tar.gz && cd ruby-${TOOL_VER_RUBY} \
+ && ./configure --prefix=/usr/local && make && make install \
+# cleanup
+ && cd / && rm -rf /tmp/ruby-inst \
+# gem install bundler & rubygem update
+ && gem update --system --no-document && gem install bundler --no-document
 
 # Install Gradle
 RUN apt-get update && apt-get -y install gradle && gradle -v
