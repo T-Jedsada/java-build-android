@@ -7,6 +7,7 @@ ENV JAVA_HOME       /usr/lib/jvm/java-8-oracle
 ENV LANG            en_US.UTF-8
 ENV LC_ALL          en_US.UTF-8
 
+# Install Java 8
 RUN apt-get update && \
   apt-get install -y --no-install-recommends locales && \
   locale-gen en_US.UTF-8 && \
@@ -19,13 +20,16 @@ RUN apt-get update && \
   apt-get install -y --no-install-recommends oracle-java8-installer oracle-java8-set-default && \
   apt-get clean all
 
-# Gradle PPA
+# Install Ruby Gem
+RUN apt-get install libgemplugin-ruby
+
+# Install Gradle
 RUN apt-get update && apt-get -y install gradle && gradle -v
 
-# Maven 2
+# Install Maven 2
 RUN apt-get purge maven maven2 && apt-get update && apt-get -y install maven && mvn --version
 
-# Fatlane
+# Install Fatlane
 RUN gem install fastlane --no-document && fastlane --version
 
 # Cleaning
