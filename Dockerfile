@@ -21,7 +21,7 @@ RUN apt-get update && \
   apt-get clean all
 
 # Install Ruby Gem
-RUN apt-get install rubygems
+RUN apt-get install -Y rubygems
 
 # Install Gradle
 RUN apt-get update && apt-get -y install gradle && gradle -v
