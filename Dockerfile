@@ -2,8 +2,13 @@ FROM ubuntu:16.04
 
 LABEL MAINTAINER Jedsada Tiwongvorakul <pondthaitay@gmail.com>
 
-ENV DEBIAN_FRONTEND noninteractive
-ENV JAVA_HOME       /usr/lib/jvm/java-8-oracle
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y locales && locale-gen en_US.UTF-8
+
+ENV LANG="en_US.UTF-8" \
+  LANGUAGE="en_US.UTF-8" \
+  LC_ALL="en_US.UTF-8" \
+  TOOL_VER_RUBY="2.5.1" \
+  JAVA_HOME="/usr/lib/jvm/java-8-oracle"
 
 # Install Java 8
 RUN apt-get update && \
@@ -20,20 +25,20 @@ RUN apt-get update && \
 
 # Install Ruby from source
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
-    build-essential \
-    zlib1g-dev \
-    libssl-dev \
-    libreadline6-dev \
-    libyaml-dev \
-    libsqlite3-dev \
- && mkdir -p /tmp/ruby-inst && cd /tmp/ruby-inst \
- && wget -q http://cache.ruby-lang.org/pub/ruby/ruby-${TOOL_VER_RUBY}.tar.gz \
- && tar -xvzf ruby-${TOOL_VER_RUBY}.tar.gz && cd ruby-${TOOL_VER_RUBY} \
- && ./configure --prefix=/usr/local && make && make install \
-# cleanup
- && cd / && rm -rf /tmp/ruby-inst \
-# gem install bundler & rubygem update
- && gem update --system --no-document && gem install bundler --no-document
+  build-essential \
+  zlib1g-dev \
+  libssl-dev \
+  libreadline6-dev \
+  libyaml-dev \
+  libsqlite3-dev \
+  && mkdir -p /tmp/ruby-inst && cd /tmp/ruby-inst \
+  && wget -q http://cache.ruby-lang.org/pub/ruby/ruby-${TOOL_VER_RUBY}.tar.gz \
+  && tar -xvzf ruby-${TOOL_VER_RUBY}.tar.gz && cd ruby-${TOOL_VER_RUBY} \
+  && ./configure --prefix=/usr/local && make && make install \
+  # cleanup
+  && cd / && rm -rf /tmp/ruby-inst \
+  # gem install bundler & rubygem update
+  && gem update --system --no-document && gem install bundler --no-document
 
 # Install Gradle
 RUN apt-get update && apt-get -y install gradle && gradle -v
