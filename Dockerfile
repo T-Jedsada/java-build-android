@@ -21,6 +21,9 @@ RUN apt-get update && \
 # Install Ruby Gem
 RUN apt-get install -y ruby-dev
 
+# Install Make
+RUN apt-get install -y make
+
 # Install Gradle
 RUN apt-get update && apt-get -y install gradle && gradle -v
 
