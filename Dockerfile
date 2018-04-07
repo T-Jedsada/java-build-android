@@ -4,8 +4,6 @@ LABEL MAINTAINER Jedsada Tiwongvorakul <pondthaitay@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV JAVA_HOME       /usr/lib/jvm/java-8-oracle
-ENV LANG            en_US.UTF-8
-ENV LC_ALL          en_US.UTF-8
 
 # Install Java 8
 RUN apt-get update && \
@@ -21,7 +19,7 @@ RUN apt-get update && \
   apt-get clean all
 
 # Install Ruby Gem
-RUN apt-get install -Y rubygems
+RUN apt-get install -y rubygems
 
 # Install Gradle
 RUN apt-get update && apt-get -y install gradle && gradle -v
