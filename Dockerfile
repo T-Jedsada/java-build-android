@@ -2,16 +2,14 @@ FROM ubuntu:16.04
 
 LABEL MAINTAINER Jedsada Tiwongvorakul <pondthaitay@gmail.com>
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y locales && locale-gen en_US.UTF-8
-
 ENV LANG="en_US.UTF-8" \
   LANGUAGE="en_US.UTF-8" \
   LC_ALL="en_US.UTF-8" \
-  TOOL_VER_RUBY="2.5.1" \
+  TOOL_VER_RUBY="2.5.1"\
   JAVA_HOME="/usr/lib/jvm/java-8-oracle"
 
 # Install Java 8
-RUN apt-get update && \
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
   apt-get install -y --no-install-recommends locales && \
   locale-gen en_US.UTF-8 && \
   apt-get dist-upgrade -y && \
