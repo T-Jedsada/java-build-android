@@ -54,8 +54,12 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
   # gem install bundler & rubygem update
   && gem update --system --no-document && gem install bundler --no-document
 
-# Install Gradle
-RUN apt-get update && apt-get -y install gradle && gradle -v
+# Pre-install and setup all build dependencies gradle requires
+COPY gradle-preinstall /root/gradle-preinstall
+RUN echo "sdk.dir=$ANDROID_HOME" > /root/gradle-preinstall/local.properties && \
+  chmod 0777 /root/gradle-preinstall/ && \
+  /root/gradle-preinstall/gradlew build && \
+  rm -rf /root/gradle-preinstall
 
 # Install Maven 2
 RUN apt-get purge maven maven2 && apt-get update && apt-get -y install maven && mvn --version
